@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MonkeyCachePractice.Views.ListPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="clr-namespace:MonkeyCachePractice.Commons"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:MonkeyCachePractice.Models"
+    xmlns:viewmodels="clr-namespace:MonkeyCachePractice.ViewModels"
+    xmlns:views="clr-namespace:MonkeyCachePractice.Views"
+    mc:Ignorable="d">
+    <ContentPage.BindingContext>
+        <viewmodels:ListViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="ButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="Red" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Behaviors>
+        <behaviors:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" />
+    </ContentPage.Behaviors>
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <CollectionView ItemsSource="{Binding People}">
+                <d:CollectionView.ItemsSource>
+                    <x:Array Type="{x:Type models:Person}">
+                        <models:Person Name="Person1" Age="10" />
+                        <models:Person Name="Person2" Age="20" />
+                        <models:Person Name="Person3" Age="30" />
+                    </x:Array>
+                </d:CollectionView.ItemsSource>
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.Footer>
+                    <Grid BackgroundColor="Transparent" HeightRequest="60" />
+                </CollectionView.Footer>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Person">
+                        <Grid>
+                            <Frame
+                                Margin="10"
+                                BackgroundColor="LightBlue"
+                                CornerRadius="10"
+                                HasShadow="True">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ListViewModel}}, Path=ItemTappedCommand}" CommandParameter="{Binding .}" />
+                                </Frame.GestureRecognizers>
+                                <StackLayout>
+                                    <Label Text="{Binding Name}" />
+                                    <Label Text="{Binding Age}" />
+                                </StackLayout>
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button
+                Margin="10"
+                AbsoluteLayout.LayoutBounds="1,1,75,75"
+                AbsoluteLayout.LayoutFlags="PositionProportional"
+                Command="{Binding AddCommand}"
+                CornerRadius="50"
+                Style="{StaticResource ButtonStyle}"
+                Text="+" />
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

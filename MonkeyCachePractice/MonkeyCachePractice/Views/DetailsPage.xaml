@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MonkeyCachePractice.Views.DetailsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:MonkeyCachePractice.ViewModels"
+    Visual="Material"
+    mc:Ignorable="d">
+    <ContentPage.BindingContext>
+        <viewmodels:DetailsViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="hello" />
+            <Entry Placeholder="Name" Text="{Binding Person.Name}" />
+            <Entry Placeholder="Age" Text="{Binding Person.Age}" />
+            <Label Text="{Binding Person.Name}" />
+            <Button Command="{Binding SaveCommand}" Text="Save" />
+            <Button Command="{Binding LoadCommand}" Text="Load" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
